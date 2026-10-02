@@ -17,8 +17,23 @@ bot = commands.Bot(
 async def on_ready():
     print(f"Bot Online! Logged in as {bot.user}")
 
+@bot.event
+async def on_message(message):
+    if message.author.bot:
+        return
+
+    print(f"ข้อความที่ได้รับ: {message.content}")
+
+    await bot.process_commands(message)
+
+@bot.command()
+async def test(ctx):
+    await ctx.send("Bot ทำงานแล้ว!")
+
 @bot.command()
 async def join(ctx):
+    print(f"Join command จาก: {ctx.author}")
+
     if ctx.author.voice is None:
         await ctx.send("กรุณาเข้า Voice Channel ก่อน")
         return
