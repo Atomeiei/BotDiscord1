@@ -1,11 +1,9 @@
 import os
 import discord
 from discord.ext import commands
+from myserver import server_on
 
 TOKEN = os.getenv("TOKEN")
-
-print("Starting bot...")
-print("TOKEN exists:", TOKEN is not None)
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -15,11 +13,9 @@ bot = commands.Bot(
     intents=intents
 )
 
-
 @bot.event
 async def on_ready():
     print(f"Bot Online! Logged in as {bot.user}")
-
 
 @bot.command()
 async def join(ctx):
@@ -36,8 +32,6 @@ async def join(ctx):
     await channel.connect()
     await ctx.send(f"Bot เข้าห้อง {channel.name} แล้ว")
 
+server_on()
 
-if not TOKEN:
-    print("ERROR: TOKEN ไม่มีค่า")
-else:
-    bot.run(TOKEN)
+bot.run(TOKEN)
